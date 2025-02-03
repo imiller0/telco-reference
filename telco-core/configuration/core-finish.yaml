@@ -19,11 +19,23 @@ policies:
     manifests:
       # The MCPs should be added as extra manifests at installation time. Their
       # inclusion here will reset the pause to false, allowing the MCPs to update
-      - path: reference-crs/custom-manifests/mcp-worker-1.yaml
+      - path: reference-crs/custom-manifests/mcp.yaml
         patches:
-        - spec:
+        - metadata:
+            name: worker-1
+            labels:
+              machineconfiguration.openshift.io/role: worker-1
+          spec:
             paused: false
             maxUnavailable: 100%
+            machineConfigSelector:
+              matchExpressions:
+              - key: machineconfiguration.openshift.io/role
+                operator: In
+                values: [ worker, worker-1 ]
+            nodeSelector:
+              matchLabels:
+                node-role.kubernetes.io/worker-1: ""
           status:
             conditions:
             - type: Updated
@@ -31,11 +43,23 @@ policies:
             - type: Updating
               status: "False"
 
-      - path: reference-crs/custom-manifests/mcp-worker-2.yaml
+      - path: reference-crs/custom-manifests/mcp.yaml
         patches:
-        - spec:
+        - metadata:
+            name: worker-2
+            labels:
+              machineconfiguration.openshift.io/role: worker-2
+          spec:
             paused: false
             maxUnavailable: 100%
+            machineConfigSelector:
+              matchExpressions:
+              - key: machineconfiguration.openshift.io/role
+                operator: In
+                values: [ worker, worker-2 ]
+            nodeSelector:
+              matchLabels:
+                node-role.kubernetes.io/worker-2: ""
           status:
             conditions:
             - type: Updated
@@ -43,11 +67,23 @@ policies:
             - type: Updating
               status: "False"
 
-      - path: reference-crs/custom-manifests/mcp-worker-3.yaml
+      - path: reference-crs/custom-manifests/mcp.yaml
         patches:
-        - spec:
+        - metadata:
+            name: worker-3
+            labels:
+              machineconfiguration.openshift.io/role: worker-3
+          spec:
             paused: false
             maxUnavailable: 100%
+            machineConfigSelector:
+              matchExpressions:
+              - key: machineconfiguration.openshift.io/role
+                operator: In
+                values: [ worker, worker-3 ]
+            nodeSelector:
+              matchLabels:
+                node-role.kubernetes.io/worker-3: ""
           status:
             conditions:
             - type: Updated
@@ -60,15 +96,56 @@ policies:
       ran.openshift.io/ztp-deploy-wave: "201"
     manifests:
       # This sets the desired maxUnavailable on the customMCPs
-      - path: reference-crs/custom-manifests/mcp-worker-1.yaml
+      - path: reference-crs/custom-manifests/mcp.yaml
         patches:
-        - spec:
+        - metadata:
+            name: worker-1
+            labels:
+              machineconfiguration.openshift.io/role: worker-1
+          spec:
+            paused: false
             maxUnavailable: 1
-      - path: reference-crs/custom-manifests/mcp-worker-2.yaml
+            machineConfigSelector:
+              matchExpressions:
+              - key: machineconfiguration.openshift.io/role
+                operator: In
+                values: [ worker, worker-1 ]
+            nodeSelector:
+              matchLabels:
+                node-role.kubernetes.io/worker-1: ""
+
+      - path: reference-crs/custom-manifests/mcp.yaml
         patches:
-        - spec:
+        - metadata:
+            name: worker-2
+            labels:
+              machineconfiguration.openshift.io/role: worker-2
+          spec:
+            paused: false
             maxUnavailable: 1
-      - path: reference-crs/custom-manifests/mcp-worker-3.yaml
+            machineConfigSelector:
+              matchExpressions:
+              - key: machineconfiguration.openshift.io/role
+                operator: In
+                values: [ worker, worker-2 ]
+            nodeSelector:
+              matchLabels:
+                node-role.kubernetes.io/worker-2: ""
+
+      - path: reference-crs/custom-manifests/mcp.yaml
         patches:
-        - spec:
+        - metadata:
+            name: worker-3
+            labels:
+              machineconfiguration.openshift.io/role: worker-3
+          spec:
+            paused: false
             maxUnavailable: 1
+            machineConfigSelector:
+              matchExpressions:
+              - key: machineconfiguration.openshift.io/role
+                operator: In
+                values: [ worker, worker-3 ]
+            nodeSelector:
+              matchLabels:
+                node-role.kubernetes.io/worker-3: ""
