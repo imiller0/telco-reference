@@ -22,6 +22,11 @@ parts:
             config:
               ignore-unspecified-fields: true
           - path: required/networking/nodeNetworkConfigurationPolicy.yaml
+          - path: required/networking/tuned-queues.yaml
+            config:
+              perField:
+                - pathToKey: spec.profile.0.data
+                  inlineDiffFunc: capturegroups
       - name: networking-nmsate
         description: |-
           https://docs.openshift.com/container-platform/4.18/scalability_and_performance/telco_ref_design_specs/core/telco-core-ref-design-components.html#telco-core-nmstate-operator_core-ref-design-components
